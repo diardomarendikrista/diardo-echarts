@@ -26,7 +26,7 @@ export default function DemographyPage() {
     setTimeout(() => {
       setChartData(demographyData);
       setIsLoading(false);
-    }, 2000);
+    }, 1000);
   }, []);
 
   return (
@@ -61,7 +61,7 @@ export default function DemographyPage() {
             {(focus === "Work Office Area" || !focus) && (
               <div>
                 <MapSection
-                  key={focus}
+                  key={focus} // kalo ga mau ada efek re-render, hapus ini
                   title={focus ? "" : "Work Office Area"}
                   onTitleClick={() => setFocus("Work Office Area")}
                 />
@@ -73,7 +73,7 @@ export default function DemographyPage() {
               {(focus === "Age Distribution" || !focus) && (
                 <div className="bg-white p-6 rounded-xl shadow-lg">
                   <LineChart
-                    key={focus}
+                    key={focus} // kalo ga mau ada efek re-render, hapus ini
                     title={focus ? "" : "Age Distribution"}
                     xAxisName="Age Distribution"
                     yAxisName="Total Participant"
@@ -89,7 +89,7 @@ export default function DemographyPage() {
               {(focus === "Tenure Distribution (in years)" || !focus) && (
                 <div className="bg-white p-6 rounded-xl shadow-lg">
                   <LineChart
-                    key={focus}
+                    key={focus} // kalo ga mau ada efek re-render, hapus ini
                     title={focus ? "" : "Tenure Distribution (in years)"}
                     xAxisName="Tenure (in years)"
                     yAxisName="Total Participants"
