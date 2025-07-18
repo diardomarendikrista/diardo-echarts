@@ -134,6 +134,13 @@ export default function DemographyPage() {
                     seriesData={chartData.generation.series}
                     colors={chartData.generation.colors}
                     onTitleClick={() => setFocus("Generation Type")}
+                    seriesCenter={["60%", "50%"]}
+                    legendOptions={{
+                      orient: "vertical",
+                      left: "left",
+                      top: "middle",
+                      itemGap: 15,
+                    }}
                   />
                 </div>
               )}
@@ -145,6 +152,13 @@ export default function DemographyPage() {
                     seriesData={chartData.gender.series}
                     colors={chartData.gender.colors}
                     onTitleClick={() => setFocus("Gender")}
+                    seriesCenter={["60%", "50%"]}
+                    legendOptions={{
+                      orient: "vertical",
+                      left: "left",
+                      top: "middle",
+                      itemGap: 15,
+                    }}
                   />
                 </div>
               )}

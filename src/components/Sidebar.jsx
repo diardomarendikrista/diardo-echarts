@@ -19,6 +19,12 @@ export default function Sidebar() {
           <FaGlobeAmericas />
         </div>
         <div
+          className={`text-xl cursor-pointer p-2 ${location.pathname === "/test-result" ? "bg-red-700 rounded-sm text-white" : ""}`}
+          onClick={() => navigate("/test-result")}
+        >
+          <FaGlobeAmericas />
+        </div>
+        <div
           className={`text-xl cursor-pointer p-2 ${location.pathname === "/other" ? "bg-red-700 rounded-sm text-white" : ""}`}
           onClick={() => navigate("/other")}
         >

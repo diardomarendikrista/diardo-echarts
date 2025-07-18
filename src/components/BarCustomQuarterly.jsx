@@ -1,7 +1,7 @@
 import React from "react";
 import ReactECharts from "echarts-for-react";
 
-// custom nya lumayan parah, jadi tidak bisa reusable (warna bar beda, dan legend juga beda)
+// custom nya lumayan rumit (warna bar beda, dan legend juga beda), jadi sementara jangan reusable dulu
 export default function BarCustomQuarterly({ title, onTitleClick, data }) {
   const getChartOptions = () => ({
     title: { text: title, left: "left", textStyle: { color: "transparent" } },

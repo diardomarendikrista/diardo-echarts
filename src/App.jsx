@@ -1,6 +1,7 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import DemographyPage from "pages/DemographyPage";
 import OtherPage from "pages/OtherPage";
+import TestResult from "pages/TestResult";
 
 function App() {
   return (
@@ -12,6 +13,14 @@ function App() {
             element={
               <div style={{ width: "100%" }}>
                 <DemographyPage />
+              </div>
+            }
+          />
+          <Route
+            path="/test-result"
+            element={
+              <div style={{ width: "100%" }}>
+                <TestResult />
               </div>
             }
           />

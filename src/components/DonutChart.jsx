@@ -2,9 +2,12 @@ import ReactECharts from "echarts-for-react";
 
 export default function ReusableDonutChart({
   title,
-  seriesData,
-  colors,
   onTitleClick,
+  seriesData,
+  seriesCenter = ["50%", "50%"],
+  colors,
+  legendOptions,
+  tooltip = { trigger: "item", formatter: "{b}: {c} ({d}%)" },
 }) {
   // Menghitung total untuk ditampilkan di tengah
   const total = seriesData.reduce((sum, item) => sum + item.value, 0);
@@ -15,18 +18,17 @@ export default function ReusableDonutChart({
       left: "left",
       textStyle: { color: "#333", fontWeight: "bold", fontSize: 16 },
     },
-    tooltip: { trigger: "item", formatter: "{b}: {c} ({d}%)" },
+    tooltip: tooltip,
     legend: {
-      orient: "vertical",
-      left: "left",
-      top: "middle",
-      itemGap: 15,
+      bottom: 10, // Posisi legenda di bawah
+      left: "center",
       // Formatter untuk menampilkan nama dan persentase di legenda
       formatter: (name) => {
         const item = seriesData.find((p) => p.name === name);
         const percentage = ((item.value / total) * 100).toFixed(2);
         return `${name}   ${percentage}%`;
       },
+      ...legendOptions, // Memungkinkan override posisi legenda
     },
     color: colors,
     series: [
@@ -34,7 +36,7 @@ export default function ReusableDonutChart({
         name: "Status",
         type: "pie",
         radius: ["40%", "70%"],
-        center: ["60%", "50%"], // Sesuaikan center chart dengan legend
+        center: seriesCenter, // Sesuaikan center chart dengan legend
         avoidLabelOverlap: false,
         label: { show: false }, // Menyembunyikan label di potongan chart
         labelLine: { show: false },
@@ -55,7 +57,10 @@ export default function ReusableDonutChart({
       </div>
 
       {/* Custom HTML untuk total di tengah donat */}
-      <div className="absolute top-1/2 left-[60%] transform -translate-x-1/2 -translate-y-1/2 text-center z-10 pointer-events-none">
+      <div
+        className="absolute top-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center z-10 pointer-events-none"
+        style={{ left: seriesCenter[0] }}
+      >
         <div className="text-2xl font-bold text-gray-800">
           {total.toLocaleString("id-ID")}
         </div>
