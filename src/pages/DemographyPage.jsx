@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
-import LineChart from "components/LineChart";
-import MapSection from "components/MapSection";
-import { demographyData } from "./hardcodeData";
-import DonutChart from "components/DonutChart";
-import HorizontalBarChart from "components/BarHorizontalChart";
-import LoadingSpinner from "components/LoadingSpinner";
 import BarChart from "components/BarChart";
+import BarHorizontalChart from "components/BarHorizontalChart";
+import DonutChart from "components/DonutChart";
 import Layout from "components/Layout";
+import LineChart from "components/LineChart";
+import LoadingSpinner from "components/LoadingSpinner";
+import MapSection from "components/MapSection";
+import { IoMdArrowBack } from "react-icons/io";
+import { demographyData } from "hardcodeData/demography";
 
 export default function DemographyPage() {
   const [chartData, setChartData] = useState({
@@ -21,10 +22,33 @@ export default function DemographyPage() {
   const [focus, setFocus] = useState("");
 
   useEffect(() => {
-    // fungsi fetch nanti disini
     setIsLoading(true);
     setTimeout(() => {
-      setChartData(demographyData);
+      // Jahit data dari API ke format chart (butuh xAxis dan series)
+      const transformedData = {
+        age: {
+          xAxis: demographyData.age.map((item) => item.name),
+          series: demographyData.age.map((item) => item.value),
+        },
+        tenure: {
+          xAxis: demographyData.tenure.map((item) => item.name),
+          series: demographyData.tenure.map((item) => item.value),
+        },
+        jobPosition: {
+          yAxis: demographyData.jobPosition.map((item) => item.name),
+          series: demographyData.jobPosition.map((item) => item.value),
+        },
+        educationDegree: {
+          xAxis: demographyData.educationDegree.map((item) => item.name),
+          series: demographyData.educationDegree.map((item) => item.value),
+        },
+        // Data Donut Chart tidak perlu diubah karena komponennya sudah menerima array of objects
+        employeeStatus: demographyData.employeeStatus,
+        generation: demographyData.generation,
+        gender: demographyData.gender,
+      };
+
+      setChartData(transformedData);
       setIsLoading(false);
     }, 1000);
   }, []);
@@ -34,20 +58,12 @@ export default function DemographyPage() {
       <div className="space-y-3 py-5 px-9 bg-[#F9FBFC] border-1 h-[760px] overflow-y-scroll">
         <div className="flex gap-2 items-center">
           {focus && (
-            <svg
-              className="w-6 h-6 text-gray-700 hover:text-black cursor-pointer"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
+            <div
+              className="text-gray-700 hover:text-black cursor-pointer text-2xl"
               onClick={() => setFocus("")}
             >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M15 19l-7-7 7-7"
-              />
-            </svg>
+              <IoMdArrowBack />
+            </div>
           )}
           <h2 className="text-2xl font-bold text-gray-700 mb-1">
             {focus || "Demography"}
@@ -73,40 +89,40 @@ export default function DemographyPage() {
               {(focus === "Age Distribution" || !focus) && (
                 <div className="bg-white p-6 rounded-xl shadow-lg">
                   <LineChart
-                    key={focus} // kalo ga mau ada efek re-render, hapus ini
+                    key={focus}
                     title={focus ? "" : "Age Distribution"}
-                    xAxisName="Age Distribution"
-                    yAxisName="Total Participant"
+                    onTitleClick={() => setFocus("Age Distribution")}
                     xAxisData={chartData.age.xAxis}
                     seriesData={chartData.age.series}
+                    xAxisName="Age Distribution"
+                    yAxisName="Total Participant"
                     seriesName="Total Participant"
                     areaColor="128, 180, 232"
                     lineColor="128, 180, 232"
-                    onTitleClick={() => setFocus("Age Distribution")}
                   />
                 </div>
               )}
               {(focus === "Tenure Distribution (in years)" || !focus) && (
                 <div className="bg-white p-6 rounded-xl shadow-lg">
                   <LineChart
-                    key={focus} // kalo ga mau ada efek re-render, hapus ini
+                    key={focus}
                     title={focus ? "" : "Tenure Distribution (in years)"}
-                    xAxisName="Tenure (in years)"
-                    yAxisName="Total Participants"
-                    xAxisData={chartData.tenure.xAxis}
-                    seriesData={chartData.tenure.series}
-                    seriesName="Total Participants"
-                    areaColor="59, 162, 114"
-                    lineColor="59, 162, 114"
                     onTitleClick={() =>
                       setFocus("Tenure Distribution (in years)")
                     }
+                    xAxisData={chartData.tenure.xAxis}
+                    seriesData={chartData.tenure.series}
+                    xAxisName="Tenure (in years)"
+                    yAxisName="Total Participants"
+                    seriesName="Total Participants"
+                    areaColor="59, 162, 114"
+                    lineColor="59, 162, 114"
                   />
                 </div>
               )}
               {(focus === "Job Positions" || !focus) && (
                 <div className="bg-white p-6 rounded-xl shadow-lg">
-                  <HorizontalBarChart
+                  <BarHorizontalChart
                     key={focus}
                     title={focus ? "" : "Job Positions"}
                     yAxisData={chartData.jobPosition.yAxis}
@@ -123,6 +139,13 @@ export default function DemographyPage() {
                     seriesData={chartData.employeeStatus.series}
                     colors={chartData.employeeStatus.colors}
                     onTitleClick={() => setFocus("Employee Status")}
+                    seriesCenter={["60%", "50%"]}
+                    legendOptions={{
+                      orient: "vertical",
+                      left: "left",
+                      top: "middle",
+                      itemGap: 15,
+                    }}
                   />
                 </div>
               )}

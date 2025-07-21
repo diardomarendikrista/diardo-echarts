@@ -2,9 +2,9 @@ import ReactECharts from "echarts-for-react";
 
 export default function ReusableLineChart({
   title,
+  xAxisData,
   xAxisName,
   yAxisName,
-  xAxisData,
   seriesData,
   seriesName,
   areaColor,

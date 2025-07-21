@@ -1,7 +1,7 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
 import DemographyPage from "pages/DemographyPage";
 import OtherPage from "pages/OtherPage";
-import TestResult from "pages/TestResult";
+import TestResultPage from "pages/TestResultPage";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 function App() {
   return (
@@ -20,7 +20,7 @@ function App() {
             path="/test-result"
             element={
               <div style={{ width: "100%" }}>
-                <TestResult />
+                <TestResultPage />
               </div>
             }
           />

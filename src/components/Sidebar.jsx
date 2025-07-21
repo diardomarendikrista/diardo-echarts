@@ -6,7 +6,7 @@ export default function Sidebar() {
   const navigate = useNavigate();
 
   return (
-    <div className="bg-white w-[75px] p-3">
+    <div className="bg-white w-[75px] p-3 h-screen fixed">
       <div className="flex flex-col gap-4 items-center justify-center">
         <img
           src="https://cms.engauge.odyssey.co.id/resources/images/logo.svg"

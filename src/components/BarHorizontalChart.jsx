@@ -4,7 +4,10 @@ export default function ReusableHorizontalBarChart({
   title,
   yAxisData,
   seriesData,
+  xAxisName = "Total Participants",
   onTitleClick,
+  height = "400px",
+  barColor = "#54a0ff",
 }) {
   const getChartOptions = () => ({
     title: {
@@ -22,7 +25,7 @@ export default function ReusableHorizontalBarChart({
     },
     xAxis: {
       type: "value",
-      name: "Total Participants",
+      name: xAxisName,
       nameLocation: "middle",
       nameGap: 30,
       boundaryGap: [0, 0.01],
@@ -39,7 +42,7 @@ export default function ReusableHorizontalBarChart({
           position: "right",
           formatter: (params) => params.value.toLocaleString("id-ID"),
         },
-        itemStyle: { color: "#54a0ff" },
+        itemStyle: { color: barColor },
       },
     ],
   });
@@ -53,7 +56,7 @@ export default function ReusableHorizontalBarChart({
       </div>
       <ReactECharts
         option={getChartOptions()}
-        style={{ height: "400px", width: "100%" }}
+        style={{ height: height, width: "100%" }}
       />
     </div>
   );

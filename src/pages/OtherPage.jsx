@@ -1,9 +1,9 @@
 import Layout from "components/Layout";
-import { rawPerformanceData, rawRatingData } from "./hardcodeData";
 import BarCustomQuarterly from "components/BarCustomQuarterly";
 import BarHorizontalStackedChart from "components/BarHorizontalStackedChart";
 import { useEffect, useState } from "react";
 import LoadingSpinner from "components/LoadingSpinner";
+import { rawPerformanceData, rawRatingData } from "hardcodeData/otherpage";
 
 export default function OtherPage() {
   const [performanceData, setPerformanceData] = useState(null);
