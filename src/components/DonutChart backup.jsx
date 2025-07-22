@@ -20,15 +20,15 @@ export default function ReusableDonutChart({
     },
     tooltip: tooltip,
     legend: {
-      bottom: 10, // Posisi legenda di bawah
+      bottom: 10, // Posisi legend di bawah
       left: "center",
-      // Formatter untuk menampilkan nama dan persentase di legenda
+      // Formatter untuk menampilkan nama dan persentase di legend
       formatter: (name) => {
         const item = seriesData.find((p) => p.name === name);
         const percentage = ((item.value / total) * 100).toFixed(2);
         return `${name}   ${percentage}%`;
       },
-      ...legendOptions, // Memungkinkan override posisi legenda
+      ...legendOptions, // untuk override posisi legend
     },
     color: colors,
     series: [
@@ -38,7 +38,7 @@ export default function ReusableDonutChart({
         radius: ["40%", "70%"],
         center: seriesCenter, // Sesuaikan center chart dengan legend
         avoidLabelOverlap: false,
-        label: { show: false }, // Menyembunyikan label di potongan chart
+        label: { show: false },
         labelLine: { show: false },
         data: seriesData,
       },

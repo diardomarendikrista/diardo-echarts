@@ -5,7 +5,7 @@ export default function GroupedBarChart({ title, onTitleClick, data }) {
     title: { text: title, left: "left", textStyle: { color: "transparent" } },
     tooltip: { trigger: "axis", axisPointer: { type: "shadow" } },
     legend: {
-      data: data.series.map((s) => s.name), // Legenda dinamis
+      data: data.series.map((s) => s.name), // Legend dinamis
     },
     grid: { left: "3%", right: "4%", bottom: "3%", containLabel: true },
     xAxis: {
@@ -18,7 +18,7 @@ export default function GroupedBarChart({ title, onTitleClick, data }) {
     series: data.series.map((s) => ({
       name: s.name,
       type: "bar",
-      barGap: 0, // Tidak ada jarak antar bar dalam satu grup
+      barGap: 0,
       emphasis: { focus: "series" },
       data: s.data,
       itemStyle: { color: s.color },

@@ -17,6 +17,7 @@ export default function DemographyPage() {
     employeeStatus: null,
     generation: null,
     gender: null,
+    map: null,
   });
   const [isLoading, setIsLoading] = useState(true);
   const [focus, setFocus] = useState("");
@@ -46,6 +47,7 @@ export default function DemographyPage() {
         employeeStatus: demographyData.employeeStatus,
         generation: demographyData.generation,
         gender: demographyData.gender,
+        map: demographyData.map,
       };
 
       setChartData(transformedData);
@@ -80,6 +82,7 @@ export default function DemographyPage() {
                   key={focus} // kalo ga mau ada efek re-render, hapus ini
                   title={focus ? "" : "Work Office Area"}
                   onTitleClick={() => setFocus("Work Office Area")}
+                  data={chartData.map}
                 />
               </div>
             )}

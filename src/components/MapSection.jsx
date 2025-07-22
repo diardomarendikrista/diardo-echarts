@@ -5,9 +5,8 @@ import "leaflet/dist/leaflet.css";
 import "leaflet-defaulticon-compatibility";
 import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css";
 import MapMarker from "./MapMarker";
-import { mapData } from "hardcodeData/mapData";
 
-export default function MapSection({ title, onTitleClick }) {
+export default function MapSection({ title, onTitleClick, data }) {
   const [type, setType] = useState("leaflet");
 
   return (
@@ -24,7 +23,7 @@ export default function MapSection({ title, onTitleClick }) {
       <div className={`${type === "json" ? "hidden" : ""}`}>
         <MapContainer
           key={type}
-          center={[-2, 120]} // koordinat tengah Indonesia
+          center={[-2, 120]} // koordinat diset ke tengah Indonesia
           zoom={5}
           style={{
             height: "450px",
@@ -36,7 +35,7 @@ export default function MapSection({ title, onTitleClick }) {
             attribution="&copy; OpenStreetMap contributors"
           />
 
-          {mapData.map((item, index) => (
+          {data.map((item, index) => (
             <MapMarker
               key={index}
               data={item}
@@ -46,7 +45,7 @@ export default function MapSection({ title, onTitleClick }) {
       </div>
 
       <div className={`${type === "leaflet" ? "hidden" : ""}`}>
-        <MapSection2 data={mapData} />
+        <MapSection2 data={data} />
       </div>
 
       <div className="flex gap-2 mt-2">

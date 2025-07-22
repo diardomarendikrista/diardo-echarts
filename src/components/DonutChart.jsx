@@ -84,7 +84,7 @@ export default function ReusableDonutChart({
         style={{
           left: centerPos.x,
           top: centerPos.y,
-          transform: "translate(-50%, -50%)", // This ensures true centering
+          transform: "translate(-50%, -50%)",
         }}
       >
         <div className="text-2xl font-bold text-gray-800">
