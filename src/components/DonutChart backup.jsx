@@ -7,33 +7,10 @@ export default function ReusableDonutChart({
   seriesCenter = ["50%", "50%"],
   colors,
   legendOptions,
-  tooltip = {
-    trigger: "item",
-    formatter: function (params) {
-      const value = params.value.toLocaleString("id-ID");
-      const percent = params.percent;
-      return `${params.name}: <b>${value}</b> (${percent}%)`;
-    },
-  },
-  height = "400px",
+  tooltip = { trigger: "item", formatter: "{b}: {c} ({d}%)" },
 }) {
   // Menghitung total untuk ditampilkan di tengah
   const total = seriesData.reduce((sum, item) => sum + item.value, 0);
-
-  // Convert seriesCenter percentage to CSS values
-  const getCenterPosition = () => {
-    const x =
-      typeof seriesCenter[0] === "string"
-        ? seriesCenter[0]
-        : `${seriesCenter[0]}%`;
-    const y =
-      typeof seriesCenter[1] === "string"
-        ? seriesCenter[1]
-        : `${seriesCenter[1]}%`;
-    return { x, y };
-  };
-
-  const centerPos = getCenterPosition();
 
   const getChartOptions = () => ({
     title: {
@@ -43,14 +20,15 @@ export default function ReusableDonutChart({
     },
     tooltip: tooltip,
     legend: {
-      bottom: 10,
+      bottom: 10, // Posisi legenda di bawah
       left: "center",
+      // Formatter untuk menampilkan nama dan persentase di legenda
       formatter: (name) => {
         const item = seriesData.find((p) => p.name === name);
         const percentage = ((item.value / total) * 100).toFixed(2);
         return `${name}   ${percentage}%`;
       },
-      ...legendOptions,
+      ...legendOptions, // Memungkinkan override posisi legenda
     },
     color: colors,
     series: [
@@ -58,9 +36,9 @@ export default function ReusableDonutChart({
         name: "Status",
         type: "pie",
         radius: ["40%", "70%"],
-        center: seriesCenter,
+        center: seriesCenter, // Sesuaikan center chart dengan legend
         avoidLabelOverlap: false,
-        label: { show: false },
+        label: { show: false }, // Menyembunyikan label di potongan chart
         labelLine: { show: false },
         data: seriesData,
       },
@@ -78,14 +56,10 @@ export default function ReusableDonutChart({
         {title}
       </div>
 
-      {/* Dynamic positioned total in center that follows seriesCenter */}
+      {/* Custom HTML untuk total di tengah donat */}
       <div
-        className="absolute z-10 pointer-events-none text-center"
-        style={{
-          left: centerPos.x,
-          top: centerPos.y,
-          transform: "translate(-50%, -50%)", // This ensures true centering
-        }}
+        className="absolute top-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center z-10 pointer-events-none"
+        style={{ left: seriesCenter[0] }}
       >
         <div className="text-2xl font-bold text-gray-800">
           {total.toLocaleString("id-ID")}
@@ -95,7 +69,7 @@ export default function ReusableDonutChart({
 
       <ReactECharts
         option={getChartOptions()}
-        style={{ height: height, width: "100%" }}
+        style={{ height: "400px", width: "100%" }}
       />
     </div>
   );

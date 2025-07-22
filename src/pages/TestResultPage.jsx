@@ -118,6 +118,7 @@ export default function TestResultPage() {
                   seriesData={testResultData.hardSkill}
                   colors={[competencyColors.fail, competencyColors.pass]}
                   seriesCenter={["50%", "50%"]}
+                  height="100%"
                 />
               </div>
             </div>

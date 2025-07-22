@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import ReactECharts from "echarts-for-react";
 import * as echarts from "echarts";
 
-export default function MapSection({ title, onTitleClick }) {
+export default function MapEcharts({ title, onTitleClick, data = [] }) {
   const [mapLoaded, setMapLoaded] = useState(false);
 
   useEffect(() => {
@@ -14,10 +14,24 @@ export default function MapSection({ title, onTitleClick }) {
       });
   }, []);
 
+  const chartData = data.map((item) => ({
+    name: item.name,
+    value: [item.lon, item.lat, item.count],
+  }));
+
   const option = {
     tooltip: {
       trigger: "item",
-      formatter: "{b}",
+      formatter: (params) => {
+        const { name, value } = params;
+
+        return `
+          <strong>${name}</strong><br/>
+          LAT : ${value[1]}<br/>
+          LON : ${value[0]}<br/>
+          Count : ${value[2]}
+        `;
+      },
     },
     geo: {
       map: "indonesia",
@@ -38,15 +52,10 @@ export default function MapSection({ title, onTitleClick }) {
     },
     series: [
       {
-        name: "Location",
+        name: "Kota Besar",
         type: "scatter",
         coordinateSystem: "geo",
-        data: [
-          {
-            name: "DKI Jakarta",
-            value: [106.8, -6.2],
-          },
-        ],
+        data: chartData,
         symbolSize: 12,
         label: {
           show: true,

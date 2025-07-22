@@ -1,5 +1,6 @@
 import { FaChartBar, FaGlobeAmericas } from "react-icons/fa";
 import { useLocation, useNavigate } from "react-router-dom";
+import { BsMotherboard } from "react-icons/bs";
 
 export default function Sidebar() {
   const location = useLocation();
@@ -22,13 +23,13 @@ export default function Sidebar() {
           className={`text-xl cursor-pointer p-2 ${location.pathname === "/test-result" ? "bg-red-700 rounded-sm text-white" : ""}`}
           onClick={() => navigate("/test-result")}
         >
-          <FaGlobeAmericas />
+          <FaChartBar />
         </div>
         <div
           className={`text-xl cursor-pointer p-2 ${location.pathname === "/other" ? "bg-red-700 rounded-sm text-white" : ""}`}
           onClick={() => navigate("/other")}
         >
-          <FaChartBar />
+          <BsMotherboard />
         </div>
       </div>
     </div>

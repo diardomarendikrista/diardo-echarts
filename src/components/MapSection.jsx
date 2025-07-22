@@ -1,9 +1,11 @@
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
-import MapSection2 from "components/MapSection2";
+import MapSection2 from "components/MapEcharts";
 import { useState } from "react";
 import "leaflet/dist/leaflet.css";
 import "leaflet-defaulticon-compatibility";
 import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css";
+import MapMarker from "./MapMarker";
+import { mapData } from "hardcodeData/mapData";
 
 export default function MapSection({ title, onTitleClick }) {
   const [type, setType] = useState("leaflet");
@@ -12,7 +14,9 @@ export default function MapSection({ title, onTitleClick }) {
     <div>
       <div
         onClick={onTitleClick}
-        className={`top-0 left-0 z-10 bg-white px-2 py-1 text-lg font-bold text-gray-800 ${onTitleClick ? "cursor-pointer hover:text-red-800" : ""}`}
+        className={`top-0 left-0 z-10 bg-white px-2 py-1 text-lg font-bold text-gray-800 ${
+          onTitleClick ? "cursor-pointer hover:text-red-800" : ""
+        }`}
       >
         {title}
       </div>
@@ -31,26 +35,36 @@ export default function MapSection({ title, onTitleClick }) {
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             attribution="&copy; OpenStreetMap contributors"
           />
-          <Marker position={[-6.2, 106.8]}>
-            <Popup>DKI Jakarta</Popup>
-          </Marker>
+
+          {mapData.map((item, index) => (
+            <MapMarker
+              key={index}
+              data={item}
+            />
+          ))}
         </MapContainer>
       </div>
 
       <div className={`${type === "leaflet" ? "hidden" : ""}`}>
-        <MapSection2 />
+        <MapSection2 data={mapData} />
       </div>
 
-      <div className="flex gap-2">
+      <div className="flex gap-2 mt-2">
         Tipe Map:
         <div
-          className={`${type === "leaflet" ? "bg-red-700 text-white" : "bg-red-300 text-black"} px-5 rounded-md cursor-pointer`}
+          className={`${
+            type === "leaflet"
+              ? "bg-red-700 text-white"
+              : "bg-red-300 text-black"
+          } px-5 rounded-md cursor-pointer`}
           onClick={() => setType("leaflet")}
         >
           Leaflet
         </div>
         <div
-          className={`${type === "json" ? "bg-red-700 text-white" : "bg-red-300 text-black"} px-5 rounded-md cursor-pointer`}
+          className={`${
+            type === "json" ? "bg-red-700 text-white" : "bg-red-300 text-black"
+          } px-5 rounded-md cursor-pointer`}
           onClick={() => setType("json")}
         >
           JSON ECHARTS
